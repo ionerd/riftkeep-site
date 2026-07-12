@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RiftKeep — Product Description for Riot Games API Application</title>
+<style>
+  :root {
+    --ink: #1c2333;
+    --muted: #5b657a;
+    --accent: #4353a8;
+    --accent-soft: #eef0fa;
+    --line: #e3e6ee;
+    --bg: #ffffff;
+    --card: #f8f9fc;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.65;
+  }
+  main { max-width: 860px; margin: 0 auto; padding: 48px 28px 80px; }
+  header.doc { border-bottom: 3px solid var(--accent); padding-bottom: 24px; margin-bottom: 36px; }
+  h1 { font-size: 2.1rem; margin: 0 0 6px; letter-spacing: -0.02em; }
+  .tagline { font-size: 1.15rem; color: var(--muted); margin: 0 0 18px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta span {
+    background: var(--accent-soft); color: var(--accent);
+    font-size: 0.82rem; font-weight: 600;
+    padding: 4px 12px; border-radius: 999px;
+  }
+  h2 {
+    font-size: 1.35rem; margin: 44px 0 12px;
+    padding-top: 20px; border-top: 1px solid var(--line);
+    letter-spacing: -0.01em;
+  }
+  h3 { font-size: 1.05rem; margin: 26px 0 8px; }
+  p { margin: 0 0 14px; }
+  ul { margin: 0 0 14px; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  .feature {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 18px 22px; margin-bottom: 16px;
+  }
+  .feature h3 { margin-top: 0; color: var(--accent); }
+  .feature p:last-child, .feature ul:last-child { margin-bottom: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 0 0 14px; font-size: 0.95rem; }
+  th, td { text-align: left; padding: 8px 12px; border: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--card); font-weight: 600; }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.88em; background: var(--accent-soft);
+    padding: 1px 5px; border-radius: 4px;
+  }
+  .note {
+    border-left: 4px solid var(--accent);
+    background: var(--accent-soft);
+    padding: 12px 18px; border-radius: 0 8px 8px 0;
+    margin: 0 0 14px;
+  }
+  footer {
+    margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line);
+    font-size: 0.85rem; color: var(--muted);
+  }
+  @media print {
+    main { padding: 0; max-width: none; }
+    .feature { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+<header class="doc">
+  <h1>RiftKeep</h1>
+  <p class="tagline">A free companion app for <strong>Riftbound — the League of Legends Trading Card Game</strong>: collection tracking, deck building with rules validation, and card loans between friends.</p>
+  <div class="meta">
+    <span>iOS &amp; Android (React Native / Expo)</span>
+    <span>Free — no monetization</span>
+    <span>Unofficial fan project</span>
+  </div>
+</header>
+
+<section>
+  <h2>1. Overview</h2>
+  <p>RiftKeep is a mobile companion app for players of Riftbound, Riot Games' physical trading card game. It solves three everyday problems for players and playgroups:</p>
+  <ul>
+    <li><strong>Knowing what you own</strong> — tracking a physical collection per printing and per finish (normal / foil), including alternate-art showcase and secret variants.</li>
+    <li><strong>Building legal decks</strong> — a deck builder that validates decks against the official construction rules and tells the player exactly which cards they still need to acquire.</li>
+    <li><strong>Lending cards safely</strong> — a structured loan system between friends, so borrowed cards are never forgotten and collection counts stay accurate while copies are out on loan.</li>
+  </ul>
+  <p>The app is a personal, non-commercial project. It contains no advertising, no in-app purchases, and no card sales or marketplace functionality of any kind.</p>
+</section>
+
+<section>
+  <h2>2. Main Features</h2>
+
+  <div class="feature">
+    <h3>2.1 Card Catalog Browser</h3>
+    <p>A browsable reference of the complete Riftbound card catalog (~1,100 cards), which is the foundation every other feature builds on.</p>
+    <ul>
+      <li><strong>Search &amp; filters:</strong> instant name search plus one-tap filter chips by set, domain (Fury, Calm, Mind, Body, Chaos, Order), and card type.</li>
+      <li><strong>Card detail view:</strong> card art, full name (name + subtitle), set and collector number, domains, type, and rarity.</li>
+      <li><strong>Variant awareness:</strong> showcase alternate arts and secret overnumbered printings are modeled as distinct printings linked to their canonical card, so collectors can track each printing separately.</li>
+      <li><strong>Legality &amp; errata:</strong> the catalog carries format-scoped ban data with effective dates (from Riot's official Rules Hub) and dated, cumulative errata, both surfaced on the card detail screen.</li>
+    </ul>
+  </div>
+
+  <div class="feature">
+    <h3>2.2 Collection Tracking</h3>
+    <p>Users record how many copies of each printing they physically own.</p>
+    <ul>
+      <li><strong>Per printing + finish:</strong> a copy is identified by card printing <em>and</em> finish (normal or foil), matching how collectors actually sort binders.</li>
+      <li><strong>Quantity steppers:</strong> fast increment/decrement entry designed for cataloguing a binder in one sitting.</li>
+      <li><strong>Owned vs. missing math:</strong> playset completion is aggregated by full card name (as the game's copy limits are), while quantities stay per printing.</li>
+      <li><strong>Owned vs. available:</strong> the app distinguishes copies <em>owned</em> (physically yours) from copies <em>available</em> (owned minus copies currently lent out), and deck math uses the latter.</li>
+    </ul>
+  </div>
+
+  <div class="feature">
+    <h3>2.3 Deck Builder with Rules Validation</h3>
+    <p>A full deck construction tool for Riftbound's deck structure: one Legend, a designated Chosen Champion, a Main Deck, a Rune Deck, and three Battlefields.</p>
+    <ul>
+      <li><strong>Zone-aware editing:</strong> cards are added to the correct zone (main / rune / battlefield), and the user picks the specific printing they want for its art.</li>
+      <li><strong>Legality validation:</strong> decks are checked against the official construction rules — zone sizes, copy limits by full name, the Signature card limit, Domain Identity (the deck's colors must match its Legend), the Chosen Champion's tag matching the Legend, and current card bans with effective dates.</li>
+      <li><strong>Deck checklist:</strong> for any deck, the app shows which required copies the user already has available and which are missing — the bridge between deck building and collection tracking.</li>
+    </ul>
+  </div>
+
+  <div class="feature">
+    <h3>2.4 Card Loans Between Friends</h3>
+    <p>A structured, bilateral loan workflow so playgroups can share cards without losing track of them.</p>
+    <ul>
+      <li><strong>Loan lifecycle:</strong> proposed → accepted → active → returned, with declined / cancelled / expired (proposals lapse after 14 days) and a lender-side force-close for loans resolved outside the app.</li>
+      <li><strong>Loan items &amp; partial returns:</strong> each loan lists specific printings, finishes, and quantities; the lender confirms returns item by item, and the loan closes automatically when everything is back.</li>
+      <li><strong>Action inbox:</strong> the app derives, per loan, the single action currently waiting on the user (answer a proposal, confirm receipt, confirm a return, or notice an expiring proposal) and badges the Loans tab with the count.</li>
+      <li><strong>Accurate counts:</strong> lending never changes ownership — lent copies stay <em>owned</em> by the lender but stop being <em>available</em>, and are never counted in the borrower's collection.</li>
+    </ul>
+  </div>
+
+  <div class="feature">
+    <h3>2.5 Friends &amp; Invites</h3>
+    <ul>
+      <li><strong>Invite codes / QR:</strong> friendships are established via single-use, short-lived invite codes shown as a QR code — no search, no acceptance step, no discovery of strangers.</li>
+      <li><strong>Friend collections:</strong> friends can browse each other's collections to see what could be borrowed before proposing a loan.</li>
+      <li><strong>Minimal profiles:</strong> a user's public identity is a display name and nothing else.</li>
+    </ul>
+  </div>
+
+  <div class="feature">
+    <h3>2.6 Wishlist</h3>
+    <p>Each collection entry carries a wanted quantity alongside the owned quantity; a dedicated wishlist screen aggregates everything the user is looking for — useful at trade tables and when friends check what to lend or gift.</p>
+  </div>
+</section>
+
+<section>
+  <h2>3. How RiftKeep Uses the Riot Games API</h2>
+  <p>RiftKeep needs exactly one thing from Riot: the <strong>Riftbound card catalog</strong> (card names, sets, collector numbers, domains, types, rarities, and card art references). No player data, no match data, and no account data are requested from any Riot API.</p>
+
+  <h3>3.1 Architecture: server-side sync only</h3>
+  <p>The mobile app <strong>never calls the Riot API directly</strong>. The catalog is synced server-side into the app's own read-only database (Supabase / PostgreSQL), and clients read only from that database:</p>
+  <table>
+    <tr><th>Aspect</th><th>Design</th></tr>
+    <tr><td>API consumer</td><td>A single server-side sync job (Supabase Edge Function). Client apps have no Riot API access path.</td></tr>
+    <tr><td>API key storage</td><td>Server-side environment secret only. The key is never embedded in the app binary, never shipped to devices, and never committed to source control.</td></tr>
+    <tr><td>Endpoint usage</td><td>The Riftbound Content API bulk catalog endpoint, fetched in full per sync run.</td></tr>
+    <tr><td>Request volume</td><td>The catalog is near-static, so syncs are scheduled (on the order of one run per day) plus occasional manual runs on set releases or errata updates. Expected load: <strong>a handful of requests per day, independent of user count</strong>.</td></tr>
+    <tr><td>Caching</td><td>The synced catalog is versioned (<code>version</code> / <code>lastUpdated</code>); clients cache it for 24 hours and refetch only when the version changes.</td></tr>
+  </table>
+
+  <h3>3.2 Data handling</h3>
+  <ul>
+    <li>Catalog data is stored as a read-only reference table; user data (collections, decks, loans) references it by foreign key but never modifies it.</li>
+    <li>Card data is displayed for reference purposes within the app only — it is not re-exposed through any public API, feed, or export.</li>
+    <li>Ban list and errata data are kept in sync with Riot's official Rules Hub publications.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>4. User Data &amp; Privacy</h2>
+  <ul>
+    <li>Accounts exist only to persist a user's own collection, decks, and loans across devices (email-based authentication via Supabase Auth).</li>
+    <li>The only public profile field is a display name. No real names, avatars, locations, or Riot account links are collected.</li>
+    <li>All user data is protected by row-level security: users can read and write only their own data, plus the collections of confirmed friends (read-only) and loans they are a party to.</li>
+    <li>No analytics or tracking SDKs, no advertising identifiers, no data sharing with third parties.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>5. Technical Summary</h2>
+  <table>
+    <tr><th>Platform</th><td>iOS and Android, built with React Native / Expo (Expo Router, React Query, NativeWind).</td></tr>
+    <tr><th>Backend</th><td>Supabase: PostgreSQL with row-level security, Auth, and Edge Functions (the Riot API sync lives here).</td></tr>
+    <tr><th>Offline posture</th><td>Persisted client-side cache so the catalog and the user's own data remain browsable offline; writes are gated on connectivity.</td></tr>
+    <tr><th>Distribution</th><td>Free download; no ads, no in-app purchases, no marketplace or card-sale functionality.</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>6. Legal</h2>
+  <div class="note">
+    <p>RiftKeep is an unofficial, fan-made companion app. RiftKeep isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, League of Legends, Riftbound, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.</p>
+    <p>The developer agrees to comply with the Riot Games Developer Terms of Service and API usage policies, including keeping the API key confidential and server-side at all times.</p>
+  </div>
+</section>
+
+<footer>
+  RiftKeep — product description prepared for the Riot Games Developer Portal application.
+</footer>
+
+</main>
+</body>
+</html>
