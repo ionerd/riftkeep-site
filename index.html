@@ -97,11 +97,11 @@
   .eyebrow::before {
     content: ""; width: 22px; height: 1px; background: currentColor; opacity: 0.7; flex: none;
   }
-  /* When a long eyebrow wraps on mobile, tighten it and pin the leading
-     dash to the first line so it reads as intentional, not misaligned. */
+  /* Keep even the longest eyebrows on a single line on phones by shrinking
+     the type, tightening the tracking, and trimming the leading dash. */
   @media (max-width: 560px) {
-    .eyebrow { letter-spacing: 0.15em; align-items: flex-start; }
-    .eyebrow::before { margin-top: 0.62em; }
+    .eyebrow { font-size: clamp(0.5rem, 2.5vw, 0.6rem); letter-spacing: 0.02em; gap: 8px; white-space: nowrap; }
+    .eyebrow::before { width: 16px; }
   }
 
   h2 {
