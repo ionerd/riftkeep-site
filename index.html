@@ -3,214 +3,656 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RiftKeep — Product Description for Riot Games API Application</title>
+<title>RiftKeep — Product Description for the Riot Games Developer Portal</title>
+<meta name="description" content="RiftKeep — a free, fan-made companion app for Riftbound, the League of Legends TCG. Product description prepared for the Riot Games API application.">
 <style>
   :root {
-    --ink: #1c2333;
-    --muted: #5b657a;
-    --accent: #4353a8;
-    --accent-soft: #eef0fa;
-    --line: #e3e6ee;
-    --bg: #ffffff;
-    --card: #f8f9fc;
+    /* Ground & surfaces — Armory Console dark */
+    --bg:        #0a0d13;
+    --bg-2:      #0c1019;
+    --surface:   #12161f;
+    --surface-2: #171c28;
+    --raised:    #1c2230;
+    /* Ink */
+    --ink:       #ece7d9;
+    --ink-soft:  #cdd2dd;
+    --muted:     #8b93a5;
+    --faint:     #626b7d;
+    /* Lines */
+    --line:      rgba(236,231,217,0.09);
+    --line-soft: rgba(236,231,217,0.055);
+    /* Accent — the app's gold action color */
+    --gold:      #e6b855;
+    --gold-hi:   #f4cf72;
+    --gold-dim:  rgba(230,184,85,0.14);
+    /* Semantic */
+    --pass:      #4caf78;
+    --fail:      #e06a5c;
+    /* Six Riftbound domains */
+    --fury:  #d84a4d;
+    --calm:  #46b06f;
+    --mind:  #4a90d9;
+    --body:  #d99a3f;
+    --chaos: #a06fd6;
+    --order: #d9c23f;
+
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+    --maxw: 1080px;
   }
-  * { box-sizing: border-box; }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--sans);
     color: var(--ink);
     background: var(--bg);
     line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
-  main { max-width: 860px; margin: 0 auto; padding: 48px 28px 80px; }
-  header.doc { border-bottom: 3px solid var(--accent); padding-bottom: 24px; margin-bottom: 36px; }
-  h1 { font-size: 2.1rem; margin: 0 0 6px; letter-spacing: -0.02em; }
-  .tagline { font-size: 1.15rem; color: var(--muted); margin: 0 0 18px; }
-  .meta { display: flex; flex-wrap: wrap; gap: 8px; }
-  .meta span {
-    background: var(--accent-soft); color: var(--accent);
-    font-size: 0.82rem; font-weight: 600;
-    padding: 4px 12px; border-radius: 999px;
+
+  /* Ambient ground: faint gold glow top, domain-tinted deep field */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(1100px 600px at 78% -8%, rgba(230,184,85,0.10), transparent 60%),
+      radial-gradient(900px 700px at 0% 8%, rgba(74,144,217,0.06), transparent 55%),
+      radial-gradient(1000px 900px at 50% 120%, rgba(160,111,214,0.05), transparent 60%),
+      var(--bg);
   }
-  h2 {
-    font-size: 1.35rem; margin: 44px 0 12px;
-    padding-top: 20px; border-top: 1px solid var(--line);
-    letter-spacing: -0.01em;
-  }
-  h3 { font-size: 1.05rem; margin: 26px 0 8px; }
-  p { margin: 0 0 14px; }
-  ul { margin: 0 0 14px; padding-left: 22px; }
-  li { margin-bottom: 6px; }
-  .feature {
-    background: var(--card); border: 1px solid var(--line);
-    border-radius: 10px; padding: 18px 22px; margin-bottom: 16px;
-  }
-  .feature h3 { margin-top: 0; color: var(--accent); }
-  .feature p:last-child, .feature ul:last-child { margin-bottom: 0; }
-  table { border-collapse: collapse; width: 100%; margin: 0 0 14px; font-size: 0.95rem; }
-  th, td { text-align: left; padding: 8px 12px; border: 1px solid var(--line); vertical-align: top; }
-  th { background: var(--card); font-weight: 600; }
-  code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.88em; background: var(--accent-soft);
-    padding: 1px 5px; border-radius: 4px;
-  }
-  .note {
-    border-left: 4px solid var(--accent);
-    background: var(--accent-soft);
-    padding: 12px 18px; border-radius: 0 8px 8px 0;
+
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { color: var(--gold-hi); }
+
+  img { max-width: 100%; display: block; }
+
+  ::selection { background: rgba(230,184,85,0.28); color: #fff; }
+
+  /* ───────────────── Layout primitives ───────────────── */
+  .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
     margin: 0 0 14px;
+    display: inline-flex; align-items: center; gap: 10px;
   }
-  footer {
-    margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line);
-    font-size: 0.85rem; color: var(--muted);
+  .eyebrow::before {
+    content: ""; width: 22px; height: 1px; background: currentColor; opacity: 0.7;
   }
-  @media print {
-    main { padding: 0; max-width: none; }
-    .feature { break-inside: avoid; }
+
+  h2 {
+    font-size: clamp(1.5rem, 3.4vw, 2.15rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    text-wrap: balance;
+    font-weight: 680;
   }
+  h3 { font-size: 1.12rem; margin: 0 0 8px; letter-spacing: -0.01em; font-weight: 640; }
+  p  { margin: 0 0 14px; color: var(--ink-soft); }
+  .lead { font-size: 1.12rem; color: var(--muted); max-width: 62ch; }
+
+  /* ───────────────── Nav ───────────────── */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    background: rgba(10,13,19,0.72);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .nav-inner {
+    max-width: var(--maxw); margin: 0 auto; padding: 0 24px;
+    height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .brand { display: flex; align-items: center; gap: 11px; font-weight: 700; letter-spacing: -0.01em; font-size: 1.02rem; }
+  .brand .glyph {
+    width: 26px; height: 26px; border-radius: 7px; flex: none;
+    background:
+      conic-gradient(from 210deg, var(--fury), var(--body), var(--order), var(--calm), var(--mind), var(--chaos), var(--fury));
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.35), 0 0 14px rgba(230,184,85,0.25);
+    position: relative;
+  }
+  .brand .glyph::after {
+    content: ""; position: absolute; inset: 6px; border-radius: 3px; background: var(--bg);
+  }
+  .brand b { color: var(--gold); font-weight: 700; }
+  .nav-links { display: flex; gap: 4px; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; }
+  .nav-links a {
+    color: var(--muted); padding: 7px 11px; border-radius: 7px; transition: color .18s, background .18s;
+  }
+  .nav-links a:hover { color: var(--ink); background: rgba(255,255,255,0.04); }
+  .nav-links a.active { color: var(--gold); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  /* ───────────────── Hero ───────────────── */
+  .hero { position: relative; padding: clamp(48px, 9vw, 104px) 0 clamp(40px, 6vw, 72px); }
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr minmax(240px, 340px); gap: 56px; align-items: center;
+  }
+  @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+  .h1 {
+    font-size: clamp(3rem, 11vw, 6.2rem);
+    line-height: 0.92; letter-spacing: -0.045em; margin: 0 0 22px; font-weight: 720;
+  }
+  .h1 .keep { color: var(--gold); }
+  .hero .tagline { font-size: clamp(1.08rem, 2.3vw, 1.32rem); color: var(--ink-soft); max-width: 40ch; margin: 0 0 26px; line-height: 1.5; }
+  .hero .tagline strong { color: var(--ink); font-weight: 640; }
+
+  .domain-row { display: flex; align-items: center; gap: 0; margin: 0 0 30px; }
+  .domain-row .dot {
+    width: 15px; height: 15px; border-radius: 50%; margin-right: 10px;
+    box-shadow: 0 0 12px -1px currentColor, inset 0 0 0 1px rgba(0,0,0,0.25);
+  }
+  .domain-row .label { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); margin-left: 6px; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em;
+    color: var(--ink-soft); background: var(--surface);
+    border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px;
+  }
+  .chip.free { color: var(--gold); border-color: rgba(230,184,85,0.4); background: var(--gold-dim); }
+
+  /* Hero device */
+  .hero-device { justify-self: center; }
+
+  /* ───────────────── Device frame ───────────────── */
+  .device {
+    position: relative; width: 100%; max-width: 300px; aspect-ratio: 1206 / 2622;
+    border-radius: 40px; padding: 8px;
+    background: linear-gradient(155deg, #2a3040, #12151d 46%, #05070b);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.08) inset,
+      0 30px 60px -22px rgba(0,0,0,0.85),
+      0 0 0 1px rgba(255,255,255,0.05);
+  }
+  .device::after { /* subtle screen sheen */
+    content: ""; position: absolute; inset: 8px; border-radius: 33px; pointer-events: none;
+    background: linear-gradient(150deg, rgba(255,255,255,0.06), transparent 30%);
+    z-index: 2;
+  }
+  .device img { width: 100%; height: 100%; object-fit: cover; border-radius: 33px; background: var(--bg); }
+  .hero-device .device { animation: float 7s ease-in-out infinite; box-shadow: 0 40px 90px -30px rgba(0,0,0,0.9), 0 0 60px -20px rgba(230,184,85,0.28), 0 0 0 1px rgba(255,255,255,0.05); }
+  @keyframes float { 0%,100% { transform: translateY(-8px); } 50% { transform: translateY(8px); } }
+  @media (prefers-reduced-motion: reduce) { .hero-device .device { animation: none; } }
+
+  /* ───────────────── Sections ───────────────── */
+  section { padding: clamp(56px, 8vw, 96px) 0; }
+  .section-head { max-width: 64ch; margin-bottom: 48px; }
+
+  /* Problem cards */
+  .problems { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 760px) { .problems { grid-template-columns: 1fr; } }
+  .pcard {
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--line); border-radius: 14px; padding: 24px 22px;
+    position: relative; overflow: hidden;
+  }
+  .pcard .k {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--dc, var(--gold)); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .pcard .k::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--dc, var(--gold)); box-shadow: 0 0 10px currentColor; }
+  .pcard p { margin: 0; color: var(--muted); font-size: 0.96rem; }
+  .pcard h3 { margin-bottom: 10px; }
+
+  /* Feature walkthrough */
+  .feature {
+    display: grid; grid-template-columns: 1fr 320px; gap: clamp(32px, 6vw, 72px); align-items: center;
+    padding: clamp(40px, 6vw, 68px) 0; border-top: 1px solid var(--line-soft);
+  }
+  .feature.flip { grid-template-columns: 320px 1fr; }
+  .feature.flip .feature-media { order: -1; }
+  @media (max-width: 820px) {
+    .feature, .feature.flip { grid-template-columns: 1fr; gap: 34px; }
+    .feature.flip .feature-media { order: 0; }
+  }
+  .feature-media { display: flex; gap: 18px; justify-content: center; }
+  .feature-media.pair .device { max-width: 218px; }
+  .feature-media.pair .device:nth-child(2) { transform: translateY(26px); }
+  @media (max-width: 820px) { .feature-media.pair .device:nth-child(2) { transform: none; } }
+
+  .feature .tag {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--dc, var(--gold)); display: inline-flex; align-items: center; gap: 9px; margin-bottom: 16px;
+  }
+  .feature .tag::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--dc, var(--gold)); box-shadow: 0 0 12px currentColor; }
+  .feature ul { margin: 16px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 11px; }
+  .feature li { position: relative; padding-left: 24px; color: var(--ink-soft); font-size: 0.98rem; }
+  .feature li::before {
+    content: ""; position: absolute; left: 0; top: 0.62em; width: 9px; height: 9px;
+    border: 1.5px solid var(--dc, var(--gold)); border-radius: 2px; transform: rotate(45deg);
+  }
+  .feature li strong { color: var(--ink); font-weight: 640; }
+
+  /* ───────────────── Riot API dossier ───────────────── */
+  .dossier { background: linear-gradient(180deg, var(--bg-2), var(--bg)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .panel {
+    background:
+      linear-gradient(180deg, rgba(230,184,85,0.05), transparent 120px),
+      var(--surface);
+    border: 1px solid var(--line); border-radius: 16px; padding: clamp(24px, 4vw, 40px);
+    position: relative;
+  }
+  .panel::before {
+    content: ""; position: absolute; top: 0; left: 24px; right: 24px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.6;
+  }
+  .keyline {
+    display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono);
+    font-size: 0.82rem; color: var(--ink-soft); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 8px; padding: 9px 14px; margin: 6px 0 24px;
+  }
+  .keyline b { color: var(--gold); }
+
+  table { border-collapse: collapse; width: 100%; margin: 6px 0 8px; font-size: 0.92rem; }
+  .table-scroll { overflow-x: auto; }
+  th, td { text-align: left; padding: 13px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  thead th { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); background: var(--bg); }
+  tbody th { font-weight: 640; color: var(--ink); white-space: nowrap; width: 190px; }
+  tbody td { color: var(--muted); }
+  tr:last-child th, tr:last-child td { border-bottom: none; }
+  code {
+    font-family: var(--mono); font-size: 0.85em; color: var(--gold-hi);
+    background: rgba(230,184,85,0.10); padding: 1px 6px; border-radius: 5px;
+  }
+
+  .split { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 40px; align-items: start; }
+  @media (max-width: 820px) { .split { grid-template-columns: 1fr; gap: 32px; } }
+
+  .checklist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; }
+  .checklist li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line-soft); color: var(--ink-soft); font-size: 0.96rem; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist .mk { color: var(--pass); font-family: var(--mono); flex: none; }
+  .checklist .no .mk { color: var(--fail); }
+
+  /* Generic feature list two-col for privacy/tech */
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 40px; }
+  @media (max-width: 700px) { .cols { grid-template-columns: 1fr; } }
+  .cols li { list-style: none; padding-left: 22px; position: relative; color: var(--ink-soft); font-size: 0.97rem; }
+  .cols li::before { content: ""; position: absolute; left: 0; top: 0.66em; width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
+  .cols ul { margin: 0; padding: 0; display: flex; flex-direction: column; gap: 13px; }
+
+  /* Legal note */
+  .note {
+    border: 1px solid var(--line); border-left: 3px solid var(--gold);
+    background: var(--surface); border-radius: 0 12px 12px 0; padding: 20px 24px;
+  }
+  .note p { color: var(--muted); font-size: 0.94rem; }
+  .note p:last-child { margin-bottom: 0; }
+
+  footer.foot {
+    border-top: 1px solid var(--line); padding: 40px 0 64px; color: var(--faint);
+    font-family: var(--mono); font-size: 0.76rem; letter-spacing: 0.04em;
+  }
+  .foot .row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
 </style>
 </head>
 <body>
-<main>
 
-<header class="doc">
-  <h1>RiftKeep</h1>
-  <p class="tagline">A free companion app for <strong>Riftbound — the League of Legends Trading Card Game</strong>: collection tracking, deck building with rules validation, and card loans between friends.</p>
-  <div class="meta">
-    <span>iOS &amp; Android (React Native / Expo)</span>
-    <span>Free — no monetization</span>
-    <span>Unofficial fan project</span>
+<header class="nav">
+  <div class="nav-inner">
+    <span class="brand"><span class="glyph"></span>Rift<b>Keep</b></span>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#overview">Overview</a>
+      <a href="#features">Features</a>
+      <a href="#api">Riot API</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#tech">Technical</a>
+      <a href="#legal">Legal</a>
+    </nav>
   </div>
 </header>
 
-<section>
-  <h2>1. Overview</h2>
-  <p>RiftKeep is a mobile companion app for players of Riftbound, Riot Games' physical trading card game. It solves three everyday problems for players and playgroups:</p>
-  <ul>
-    <li><strong>Knowing what you own</strong> — tracking a physical collection per printing and per finish (normal / foil), including alternate-art showcase and secret variants.</li>
-    <li><strong>Building legal decks</strong> — a deck builder that validates decks against the official construction rules and tells the player exactly which cards they still need to acquire.</li>
-    <li><strong>Lending cards safely</strong> — a structured loan system between friends, so borrowed cards are never forgotten and collection counts stay accurate while copies are out on loan.</li>
-  </ul>
-  <p>The app is a personal, non-commercial project. It contains no advertising, no in-app purchases, and no card sales or marketplace functionality of any kind.</p>
-</section>
+<main>
 
-<section>
-  <h2>2. Main Features</h2>
-
-  <div class="feature">
-    <h3>2.1 Card Catalog Browser</h3>
-    <p>A browsable reference of the complete Riftbound card catalog (~1,100 cards), which is the foundation every other feature builds on.</p>
-    <ul>
-      <li><strong>Search &amp; filters:</strong> instant name search plus one-tap filter chips by set, domain (Fury, Calm, Mind, Body, Chaos, Order), and card type.</li>
-      <li><strong>Card detail view:</strong> card art, full name (name + subtitle), set and collector number, domains, type, and rarity.</li>
-      <li><strong>Variant awareness:</strong> showcase alternate arts and secret overnumbered printings are modeled as distinct printings linked to their canonical card, so collectors can track each printing separately.</li>
-      <li><strong>Legality &amp; errata:</strong> the catalog carries format-scoped ban data with effective dates (from Riot's official Rules Hub) and dated, cumulative errata, both surfaced on the card detail screen.</li>
-    </ul>
-  </div>
-
-  <div class="feature">
-    <h3>2.2 Collection Tracking</h3>
-    <p>Users record how many copies of each printing they physically own.</p>
-    <ul>
-      <li><strong>Per printing + finish:</strong> a copy is identified by card printing <em>and</em> finish (normal or foil), matching how collectors actually sort binders.</li>
-      <li><strong>Quantity steppers:</strong> fast increment/decrement entry designed for cataloguing a binder in one sitting.</li>
-      <li><strong>Owned vs. missing math:</strong> playset completion is aggregated by full card name (as the game's copy limits are), while quantities stay per printing.</li>
-      <li><strong>Owned vs. available:</strong> the app distinguishes copies <em>owned</em> (physically yours) from copies <em>available</em> (owned minus copies currently lent out), and deck math uses the latter.</li>
-    </ul>
-  </div>
-
-  <div class="feature">
-    <h3>2.3 Deck Builder with Rules Validation</h3>
-    <p>A full deck construction tool for Riftbound's deck structure: one Legend, a designated Chosen Champion, a Main Deck, a Rune Deck, and three Battlefields.</p>
-    <ul>
-      <li><strong>Zone-aware editing:</strong> cards are added to the correct zone (main / rune / battlefield), and the user picks the specific printing they want for its art.</li>
-      <li><strong>Legality validation:</strong> decks are checked against the official construction rules — zone sizes, copy limits by full name, the Signature card limit, Domain Identity (the deck's colors must match its Legend), the Chosen Champion's tag matching the Legend, and current card bans with effective dates.</li>
-      <li><strong>Deck checklist:</strong> for any deck, the app shows which required copies the user already has available and which are missing — the bridge between deck building and collection tracking.</li>
-    </ul>
-  </div>
-
-  <div class="feature">
-    <h3>2.4 Card Loans Between Friends</h3>
-    <p>A structured, bilateral loan workflow so playgroups can share cards without losing track of them.</p>
-    <ul>
-      <li><strong>Loan lifecycle:</strong> proposed → accepted → active → returned, with declined / cancelled / expired (proposals lapse after 14 days) and a lender-side force-close for loans resolved outside the app.</li>
-      <li><strong>Loan items &amp; partial returns:</strong> each loan lists specific printings, finishes, and quantities; the lender confirms returns item by item, and the loan closes automatically when everything is back.</li>
-      <li><strong>Action inbox:</strong> the app derives, per loan, the single action currently waiting on the user (answer a proposal, confirm receipt, confirm a return, or notice an expiring proposal) and badges the Loans tab with the count.</li>
-      <li><strong>Accurate counts:</strong> lending never changes ownership — lent copies stay <em>owned</em> by the lender but stop being <em>available</em>, and are never counted in the borrower's collection.</li>
-    </ul>
-  </div>
-
-  <div class="feature">
-    <h3>2.5 Friends &amp; Invites</h3>
-    <ul>
-      <li><strong>Invite codes / QR:</strong> friendships are established via single-use, short-lived invite codes shown as a QR code — no search, no acceptance step, no discovery of strangers.</li>
-      <li><strong>Friend collections:</strong> friends can browse each other's collections to see what could be borrowed before proposing a loan.</li>
-      <li><strong>Minimal profiles:</strong> a user's public identity is a display name and nothing else.</li>
-    </ul>
-  </div>
-
-  <div class="feature">
-    <h3>2.6 Wishlist</h3>
-    <p>Each collection entry carries a wanted quantity alongside the owned quantity; a dedicated wishlist screen aggregates everything the user is looking for — useful at trade tables and when friends check what to lend or gift.</p>
+<!-- ───────── HERO ───────── -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Riot Games Developer Portal · Product Description</p>
+        <h1 class="h1">Rift<span class="keep">Keep</span></h1>
+        <p class="tagline">A free companion app for <strong>Riftbound — the League of Legends Trading Card Game</strong>. Track a physical collection, build tournament-legal decks, and lend cards between friends.</p>
+        <div class="domain-row" aria-label="The six Riftbound domains">
+          <span class="dot" style="color:var(--fury); background:var(--fury)"></span>
+          <span class="dot" style="color:var(--calm); background:var(--calm)"></span>
+          <span class="dot" style="color:var(--mind); background:var(--mind)"></span>
+          <span class="dot" style="color:var(--body); background:var(--body)"></span>
+          <span class="dot" style="color:var(--chaos); background:var(--chaos)"></span>
+          <span class="dot" style="color:var(--order); background:var(--order)"></span>
+          <span class="label">Fury · Calm · Mind · Body · Chaos · Order</span>
+        </div>
+        <div class="chips">
+          <span class="chip">iOS &amp; Android</span>
+          <span class="chip">React Native · Expo</span>
+          <span class="chip free">Free — no monetization</span>
+          <span class="chip">Unofficial fan project</span>
+        </div>
+      </div>
+      <div class="hero-device">
+        <div class="device"><img src="screenshots/01-collection.png" alt="RiftKeep collection screen showing card search, domain filters and set progress" loading="eager" width="1206" height="2622"></div>
+      </div>
+    </div>
   </div>
 </section>
 
-<section>
-  <h2>3. How RiftKeep Uses the Riot Games API</h2>
-  <p>RiftKeep needs exactly one thing from Riot: the <strong>Riftbound card catalog</strong> (card names, sets, collector numbers, domains, types, rarities, and card art references). No player data, no match data, and no account data are requested from any Riot API.</p>
-
-  <h3>3.1 Architecture: server-side sync only</h3>
-  <p>The mobile app <strong>never calls the Riot API directly</strong>. The catalog is synced server-side into the app's own read-only database (Supabase / PostgreSQL), and clients read only from that database:</p>
-  <table>
-    <tr><th>Aspect</th><th>Design</th></tr>
-    <tr><td>API consumer</td><td>A single server-side sync job (Supabase Edge Function). Client apps have no Riot API access path.</td></tr>
-    <tr><td>API key storage</td><td>Server-side environment secret only. The key is never embedded in the app binary, never shipped to devices, and never committed to source control.</td></tr>
-    <tr><td>Endpoint usage</td><td>The Riftbound Content API bulk catalog endpoint, fetched in full per sync run.</td></tr>
-    <tr><td>Request volume</td><td>The catalog is near-static, so syncs are scheduled (on the order of one run per day) plus occasional manual runs on set releases or errata updates. Expected load: <strong>a handful of requests per day, independent of user count</strong>.</td></tr>
-    <tr><td>Caching</td><td>The synced catalog is versioned (<code>version</code> / <code>lastUpdated</code>); clients cache it for 24 hours and refetch only when the version changes.</td></tr>
-  </table>
-
-  <h3>3.2 Data handling</h3>
-  <ul>
-    <li>Catalog data is stored as a read-only reference table; user data (collections, decks, loans) references it by foreign key but never modifies it.</li>
-    <li>Card data is displayed for reference purposes within the app only — it is not re-exposed through any public API, feed, or export.</li>
-    <li>Ban list and errata data are kept in sync with Riot's official Rules Hub publications.</li>
-  </ul>
-</section>
-
-<section>
-  <h2>4. User Data &amp; Privacy</h2>
-  <ul>
-    <li>Accounts exist only to persist a user's own collection, decks, and loans across devices (email-based authentication via Supabase Auth).</li>
-    <li>The only public profile field is a display name. No real names, avatars, locations, or Riot account links are collected.</li>
-    <li>All user data is protected by row-level security: users can read and write only their own data, plus the collections of confirmed friends (read-only) and loans they are a party to.</li>
-    <li>No analytics or tracking SDKs, no advertising identifiers, no data sharing with third parties.</li>
-  </ul>
-</section>
-
-<section>
-  <h2>5. Technical Summary</h2>
-  <table>
-    <tr><th>Platform</th><td>iOS and Android, built with React Native / Expo (Expo Router, React Query, NativeWind).</td></tr>
-    <tr><th>Backend</th><td>Supabase: PostgreSQL with row-level security, Auth, and Edge Functions (the Riot API sync lives here).</td></tr>
-    <tr><th>Offline posture</th><td>Persisted client-side cache so the catalog and the user's own data remain browsable offline; writes are gated on connectivity.</td></tr>
-    <tr><th>Distribution</th><td>Free download; no ads, no in-app purchases, no marketplace or card-sale functionality.</td></tr>
-  </table>
-</section>
-
-<section>
-  <h2>6. Legal</h2>
-  <div class="note">
-    <p>RiftKeep is an unofficial, fan-made companion app. RiftKeep isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, League of Legends, Riftbound, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.</p>
-    <p>The developer agrees to comply with the Riot Games Developer Terms of Service and API usage policies, including keeping the API key confidential and server-side at all times.</p>
+<!-- ───────── OVERVIEW ───────── -->
+<section id="overview">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">What it solves</p>
+      <h2>Three everyday problems for a Riftbound playgroup.</h2>
+      <p class="lead">RiftKeep is a personal, non-commercial project. No advertising, no in-app purchases, and no card sales or marketplace of any kind — just the tools a play group actually needs around the physical game.</p>
+    </div>
+    <div class="problems">
+      <div class="pcard reveal" style="--dc:var(--body)">
+        <div class="k">Know what you own</div>
+        <h3>Your collection, per printing</h3>
+        <p>Track every copy by printing and finish — normal or foil — including showcase alternate arts and secret overnumbered variants.</p>
+      </div>
+      <div class="pcard reveal" style="--dc:var(--mind)">
+        <div class="k">Build legal decks</div>
+        <h3>Validated against the rules</h3>
+        <p>A deck builder that checks a build against Riftbound's official construction rules and shows exactly which cards you still need.</p>
+      </div>
+      <div class="pcard reveal" style="--dc:var(--calm)">
+        <div class="k">Lend safely</div>
+        <h3>Loans that stay accounted for</h3>
+        <p>A structured loan workflow so borrowed cards are never forgotten and collection counts stay accurate while copies are out.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<footer>
-  RiftKeep — product description prepared for the Riot Games Developer Portal application.
-</footer>
+<!-- ───────── FEATURES WALKTHROUGH ───────── -->
+<section id="features">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">A walk through the app</p>
+      <h2>Every screen is built on the Riftbound card catalog.</h2>
+      <p class="lead">Screens below are captured on device. The interface ships in Italian — the app's launch locale — while card data stays in its original English.</p>
+    </div>
+
+    <!-- Catalog & sets -->
+    <div class="feature reveal" style="--dc:var(--body)">
+      <div class="feature-body">
+        <span class="tag">Catalog &amp; sets</span>
+        <h2>Browse the whole catalog, or one set at a time.</h2>
+        <p>The catalog is a browsable reference of the complete Riftbound card list — the foundation every other feature builds on.</p>
+        <ul>
+          <li><strong>Search &amp; domain filters:</strong> instant name search plus one-tap chips for the six domains and card type.</li>
+          <li><strong>Set navigation:</strong> a “Your sets” view with per-set completion, drilling into any set with owned / on-loan / collected columns.</li>
+          <li><strong>Progress at a glance:</strong> each set carries a completion bar so a collector can see how close a set is to done.</li>
+        </ul>
+      </div>
+      <div class="feature-media pair">
+        <div class="device"><img src="screenshots/04-sets.png" alt="Your sets list with per-set completion bars" loading="lazy" width="1206" height="2622"></div>
+        <div class="device"><img src="screenshots/05-set-detail.png" alt="Set detail for Origins with search and owned columns" loading="lazy" width="1206" height="2622"></div>
+      </div>
+    </div>
+
+    <!-- Card detail / Riot data -->
+    <div class="feature flip reveal" style="--dc:var(--fury)">
+      <div class="feature-body">
+        <span class="tag">Card detail</span>
+        <h2>The card data, exactly as Riot publishes it.</h2>
+        <p>Every card opens to its full reference: art, full name and subtitle, domains, type, stats, and every printing that shares its name.</p>
+        <ul>
+          <li><strong>Variant awareness:</strong> base, showcase, and secret printings are modeled as distinct cards linked to their canonical name.</li>
+          <li><strong>Legality &amp; errata:</strong> format-scoped bans with effective dates and dated, cumulative errata are surfaced right on the card.</li>
+          <li><strong>Your copies inline:</strong> owned and wanted counts per finish, aggregated by full name for playset math.</li>
+        </ul>
+      </div>
+      <div class="feature-media pair">
+        <div class="device"><img src="screenshots/02-card-detail.png" alt="Card detail for Annie, Dark Child with stats, owned copies and printings" loading="lazy" width="1206" height="2622"></div>
+        <div class="device"><img src="screenshots/03-card-legality.png" alt="Card detail for a banned battlefield showing its ban date and errata" loading="lazy" width="1206" height="2622"></div>
+      </div>
+    </div>
+
+    <!-- Deck builder & legality -->
+    <div class="feature reveal" style="--dc:var(--mind)">
+      <div class="feature-body">
+        <span class="tag">Deck builder</span>
+        <h2>Build to the rules, and see what’s missing.</h2>
+        <p>A full construction tool for Riftbound’s deck structure: one Legend, a Chosen Champion, a Main Deck, a Rune Deck, three Battlefields, and an optional Sideboard.</p>
+        <ul>
+          <li><strong>Zone-aware editing:</strong> each card goes to its correct zone, and you pick the exact printing you want for its art.</li>
+          <li><strong>Full legality checklist:</strong> zone sizes, copy limits by full name, the Signature limit, Domain Identity, the champion tag match, and current bans — each rule passes, fails, or waits on a prerequisite.</li>
+          <li><strong>Deck vs. collection:</strong> every entry shows how many copies you have <em>available</em> versus how many the deck needs.</li>
+        </ul>
+      </div>
+      <div class="feature-media pair">
+        <div class="device"><img src="screenshots/06-deck-builder.png" alt="Deck builder showing Legend, Chosen Champion and zones" loading="lazy" width="1206" height="2622"></div>
+        <div class="device"><img src="screenshots/07-deck-legality.png" alt="Deck legality checklist with per-rule pass and fail markers" loading="lazy" width="1206" height="2622"></div>
+      </div>
+    </div>
+
+    <!-- Sharing, import/export & who has it -->
+    <div class="feature flip reveal" style="--dc:var(--chaos)">
+      <div class="feature-body">
+        <span class="tag">Decklists &amp; sharing</span>
+        <h2>Share a deck, or match its gaps to your friends.</h2>
+        <p>Decks are private by default. Share one — live and revocable — with specific friends, or move a list in and out as plain text.</p>
+        <ul>
+          <li><strong>Import &amp; export:</strong> read and write decklists in the community text format, with a preview-first import that lists any unresolved lines before creating.</li>
+          <li><strong>Per-friend sharing &amp; copy:</strong> a shared deck is read-only; a friend can snapshot it into their own decks.</li>
+          <li><strong>“Who has it?”:</strong> a deck’s missing cards are matched against friends’ <em>available</em> copies, with a prefilled loan proposal ready to send.</li>
+        </ul>
+      </div>
+      <div class="feature-media pair">
+        <div class="device"><img src="screenshots/13-deck-share.png" alt="Deck actions: share, export list, copy and duplicate" loading="lazy" width="1206" height="2622"></div>
+        <div class="device"><img src="screenshots/09-who-has-it.png" alt="Who has it panel showing which friend can lend a missing card" loading="lazy" width="1206" height="2622"></div>
+      </div>
+    </div>
+
+    <!-- Loans & friends -->
+    <div class="feature reveal" style="--dc:var(--calm)">
+      <div class="feature-body">
+        <span class="tag">Loans &amp; friends</span>
+        <h2>Lend cards without losing track of them.</h2>
+        <p>Friends connect through single-use QR invite codes — no search, no strangers. From there, loans move through a clear, bilateral lifecycle.</p>
+        <ul>
+          <li><strong>Loan lifecycle:</strong> proposed → accepted → active → returned, with declined, cancelled, expired, and a lender-side force-close, plus item-by-item partial returns.</li>
+          <li><strong>Action inbox:</strong> the app derives the single move each loan is waiting on and badges the Loans tab with the count.</li>
+          <li><strong>Accurate counts:</strong> lending never changes ownership — lent copies stay <em>owned</em> but stop being <em>available</em>, and never count in the borrower’s collection.</li>
+        </ul>
+      </div>
+      <div class="feature-media pair">
+        <div class="device"><img src="screenshots/11-invite.png" alt="Invite a friend screen with a single-use QR code" loading="lazy" width="1206" height="2622"></div>
+        <div class="device"><img src="screenshots/10-loan-proposal.png" alt="A loan proposal listing the specific card, finish and quantity" loading="lazy" width="1206" height="2622"></div>
+      </div>
+    </div>
+
+    <!-- Wishlist -->
+    <div class="feature flip reveal" style="--dc:var(--order)">
+      <div class="feature-body">
+        <span class="tag">Wishlist</span>
+        <h2>Track what you’re still hunting for.</h2>
+        <p>Every collection entry carries a wanted quantity alongside the owned one; a dedicated wishlist gathers everything you’re after — useful at trade tables and when friends check what to lend.</p>
+        <ul>
+          <li><strong>Per card &amp; finish:</strong> wanted counts are tracked exactly like owned copies, normal or foil.</li>
+          <li><strong>Matching in both directions:</strong> see which friends have your wished cards available, and which of your cards sit on a friend’s wishlist.</li>
+        </ul>
+      </div>
+      <div class="feature-media pair">
+        <div class="device"><img src="screenshots/08-wishlist.png" alt="Wishlist screen listing wanted cards with quantities" loading="lazy" width="1206" height="2622"></div>
+        <div class="device"><img src="screenshots/12-friend-collection.png" alt="A friend's collection and wishlist as seen for lending" loading="lazy" width="1206" height="2622"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ───────── RIOT API ───────── -->
+<section id="api" class="dossier">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">How RiftKeep uses the Riot Games API</p>
+      <h2>One thing, one path: the Riftbound card catalog.</h2>
+      <p class="lead">RiftKeep needs exactly one input from Riot — the Riftbound card catalog (names, sets, collector numbers, domains, types, rarities, and card-art references). <strong style="color:var(--ink)">No player data, no match data, and no account data are requested from any Riot API.</strong></p>
+    </div>
+
+    <div class="panel reveal">
+      <p class="eyebrow" style="margin-bottom:6px">Architecture · server-side sync only</p>
+      <div class="keyline">The mobile app <b>never</b> calls the Riot API directly.</div>
+      <p>The catalog is synced server-side into the app’s own read-only database (Supabase / PostgreSQL); clients read only from that database.</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Aspect</th><th scope="col">Design</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">API consumer</th><td>A single server-side sync job (Supabase Edge Function). Client apps have no Riot API access path.</td></tr>
+            <tr><th scope="row">API key storage</th><td>Server-side environment secret only. The key is never embedded in the app binary, shipped to devices, or committed to source control.</td></tr>
+            <tr><th scope="row">Endpoint usage</th><td>The Riftbound Content API bulk catalog endpoint, fetched in full per sync run.</td></tr>
+            <tr><th scope="row">Request volume</th><td>The catalog is near-static, so syncs are scheduled (about one run per day) plus occasional manual runs on set releases or errata updates — <strong style="color:var(--ink)">a handful of requests per day, independent of user count</strong>.</td></tr>
+            <tr><th scope="row">Caching</th><td>The synced catalog is versioned (<code>version</code> / <code>lastUpdated</code>); clients cache it for 24&nbsp;hours and refetch only when the version changes.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="split" style="margin-top:44px">
+      <div class="reveal">
+        <p class="eyebrow">Data handling</p>
+        <h3 style="font-size:1.05rem;margin-bottom:16px">Catalog data is reference-only</h3>
+        <ul class="checklist">
+          <li><span class="mk">✓</span><span>Stored as a read-only reference table; user data references it by foreign key but never modifies it.</span></li>
+          <li><span class="mk">✓</span><span>Displayed for reference inside the app only — never re-exposed through any public API, feed, or export.</span></li>
+          <li><span class="mk">✓</span><span>Ban-list and errata data are kept in sync with Riot’s official Rules Hub publications.</span></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <p class="eyebrow">Not requested</p>
+        <h3 style="font-size:1.05rem;margin-bottom:16px">What RiftKeep never touches</h3>
+        <ul class="checklist">
+          <li class="no"><span class="mk">✕</span><span>Player accounts, summoner data, or Riot account links.</span></li>
+          <li class="no"><span class="mk">✕</span><span>Match, ranked, or any live-game telemetry.</span></li>
+          <li class="no"><span class="mk">✕</span><span>Any endpoint beyond the Riftbound card catalog.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── PRIVACY ───────── -->
+<section id="privacy">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">User data &amp; privacy</p>
+      <h2>Accounts exist to hold your own cards — nothing more.</h2>
+    </div>
+    <div class="cols reveal">
+      <ul>
+        <li>Accounts persist a user’s own collection, decks, and loans across devices (email-based authentication via Supabase Auth).</li>
+        <li>The only public profile field is a display name. No real names, avatars, locations, or Riot account links are collected.</li>
+      </ul>
+      <ul>
+        <li>Row-level security means users read and write only their own data, plus confirmed friends’ collections (read-only) and loans they are a party to.</li>
+        <li>No analytics or tracking SDKs, no advertising identifiers, no data sharing with third parties.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── TECH ───────── -->
+<section id="tech" class="dossier">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Technical summary</p>
+      <h2>Built on Expo and Supabase.</h2>
+    </div>
+    <div class="panel reveal">
+      <div class="table-scroll">
+        <table>
+          <tbody>
+            <tr><th scope="row">Platform</th><td>iOS and Android, built with React Native / Expo (Expo Router, React Query, NativeWind).</td></tr>
+            <tr><th scope="row">Backend</th><td>Supabase: PostgreSQL with row-level security, Auth, and Edge Functions — the Riot API sync lives here.</td></tr>
+            <tr><th scope="row">Offline posture</th><td>A persisted client-side cache keeps the catalog and the user’s own data browsable offline; writes are gated on connectivity.</td></tr>
+            <tr><th scope="row">Distribution</th><td>Free download; no ads, no in-app purchases, no marketplace or card-sale functionality.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── LEGAL ───────── -->
+<section id="legal">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:28px">
+      <p class="eyebrow">Legal</p>
+    </div>
+    <div class="note reveal">
+      <p>RiftKeep is an unofficial, fan-made companion app. RiftKeep isn’t endorsed by Riot Games and doesn’t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, League of Legends, Riftbound, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.</p>
+      <p>The developer agrees to comply with the Riot Games Developer Terms of Service and API usage policies, including keeping the API key confidential and server-side at all times.</p>
+    </div>
+  </div>
+</section>
 
 </main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="row">
+      <span>RiftKeep — product description for the Riot Games Developer Portal application.</span>
+      <span>Fury · Calm · Mind · Body · Chaos · Order</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      els.forEach(function (e) { e.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    els.forEach(function (e) { io.observe(e); });
+  })();
+
+  // Active nav highlight
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+    var map = {};
+    links.forEach(function (l) { map[l.getAttribute('href').slice(1)] = l; });
+    var secs = Object.keys(map).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove('active'); });
+          if (map[en.target.id]) map[en.target.id].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    secs.forEach(function (s) { io.observe(s); });
+  })();
+</script>
+
 </body>
 </html>
